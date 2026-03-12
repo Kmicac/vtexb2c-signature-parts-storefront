@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import type { StaticImageData } from 'next/image'
 
 import styles from './home.module.scss'
 
@@ -6,7 +7,7 @@ type PromoBannerProps = {
   title: string
   ctaLabel: string
   ctaHref: string
-  image: string
+  image: StaticImageData
 }
 
 function PromoBanner({ title, ctaLabel, ctaHref, image }: PromoBannerProps) {

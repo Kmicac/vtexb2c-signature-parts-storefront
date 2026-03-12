@@ -1,12 +1,17 @@
 import Image from 'next/image'
+import type { StaticImageData } from 'next/image'
 
 import type { CategoryItem } from '../../data/homeMock'
 
 import styles from './home.module.scss'
 
+type CategoryItemWithImage = CategoryItem & {
+  image: StaticImageData
+}
+
 type CategoryGridProps = {
   title: string
-  items: CategoryItem[]
+  items: CategoryItemWithImage[]
 }
 
 function CategoryGrid({ title, items }: CategoryGridProps) {

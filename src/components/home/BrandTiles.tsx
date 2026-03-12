@@ -1,12 +1,18 @@
 import Image from 'next/image'
+import type { StaticImageData } from 'next/image'
 
 import type { BrandItem } from '../../data/homeMock'
 
 import styles from './home.module.scss'
 
+type BrandItemWithAssets = BrandItem & {
+  logo: StaticImageData | string
+  cover: StaticImageData
+}
+
 type BrandTilesProps = {
   title: string
-  items: BrandItem[]
+  items: BrandItemWithAssets[]
 }
 
 function BrandTiles({ title, items }: BrandTilesProps) {

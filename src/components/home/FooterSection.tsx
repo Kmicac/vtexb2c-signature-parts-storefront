@@ -1,4 +1,5 @@
 import Footer from './Footer'
+import { homeAssets } from '../../assets/homeAssets'
 import { homeMock } from '../../data/homeMock'
 
 function FooterSection() {
@@ -7,7 +8,7 @@ function FooterSection() {
       brandName={homeMock.brand.name}
       sections={homeMock.footer.sections}
       disclaimer={homeMock.footer.disclaimer}
-      logos={homeMock.logos}
+      logos={homeAssets.logos}
     />
   )
 }

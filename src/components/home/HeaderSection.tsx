@@ -1,4 +1,9 @@
+import { FocusEvent, useEffect, useMemo, useRef, useState } from 'react'
+
+import { AccountModal, MinicartSidebar } from '../common'
 import { homeMock } from '../../data/homeMock'
+import useUIState from '../../hooks/useUIState'
+import { useCartToggleButton } from 'src/sdk/cart/useCartToggleButton'
 
 import styles from './home.module.scss'
 
@@ -24,41 +29,204 @@ function CartIcon() {
   )
 }
 
+function SearchIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M10.5 3a7.5 7.5 0 1 0 4.7 13.35l4.22 4.22 1.42-1.42-4.21-4.22A7.5 7.5 0 0 0 10.5 3Zm0 2a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11Z"
+      />
+    </svg>
+  )
+}
+
+const categoryParts: Record<string, string[]> = {
+  frenos: [
+    'Pastillas de freno',
+    'Discos ventilados',
+    'Sensores ABS',
+    'Bombines',
+    'Calipers',
+    'Líquido DOT 4',
+  ],
+  suspension: [
+    'Amortiguadores',
+    'Bieletas',
+    'Bujes',
+    'Cazoletas',
+    'Resortes',
+    'Brazos de control',
+  ],
+  motor: [
+    'Filtros de aceite',
+    'Filtros de aire',
+    'Bobinas',
+    'Bujías',
+    'Correas',
+    'Bombas de agua',
+  ],
+  accesorios: [
+    'Tapetes premium',
+    'Escobillas',
+    'Aceites y aditivos',
+    'Sensores TPMS',
+    'Limpieza técnica',
+    'Iluminación LED',
+  ],
+  rines: [
+    'Rines de aleación',
+    'Tapas centrales',
+    'Tuercas de seguridad',
+    'Válvulas',
+    'Anillos centradores',
+    'Separadores',
+  ],
+  baterias: [
+    'Baterías AGM',
+    'Baterías EFB',
+    'Cargadores inteligentes',
+    'Bornes',
+    'Protectores',
+    'Probadores',
+  ],
+  'partes-carro': [
+    'Paragolpes',
+    'Ópticas delanteras',
+    'Faros traseros',
+    'Guardabarros',
+    'Capot',
+    'Rejillas',
+  ],
+}
+
 function HeaderSection() {
+  const { isAccountModalOpen, openAccountModal, closeAccountModal } = useUIState()
+  const cartBtnProps = useCartToggleButton()
+  const cartItems = Number(cartBtnProps['data-items'] ?? 0)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [activeCategory, setActiveCategory] = useState<string | null>(null)
+  const searchWrapRef = useRef<HTMLDivElement>(null)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+
+  const activeParts = useMemo(
+    () => (activeCategory ? categoryParts[activeCategory] ?? [] : []),
+    [activeCategory]
+  )
+
+  const handleNavbarBlur = (event: FocusEvent<HTMLElement>) => {
+    const nextFocus = event.relatedTarget as Node | null
+
+    if (nextFocus && event.currentTarget.contains(nextFocus)) {
+      return
+    }
+
+    setActiveCategory(null)
+  }
+
+  useEffect(() => {
+    if (!isSearchOpen) {
+      return
+    }
+
+    searchInputRef.current?.focus()
+
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (searchWrapRef.current?.contains(event.target as Node)) {
+        return
+      }
+
+      setIsSearchOpen(false)
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsSearchOpen(false)
+      }
+    }
+
+    window.addEventListener('mousedown', handleOutsideClick)
+    window.addEventListener('keydown', handleEscape)
+
+    return () => {
+      window.removeEventListener('mousedown', handleOutsideClick)
+      window.removeEventListener('keydown', handleEscape)
+    }
+  }, [isSearchOpen])
+
   return (
     <div className={`${styles.headerSticky} ${styles.surface}`}>
-      <header className={`${styles.container} ${styles.header}`} id="busqueda">
+      <header className={`${styles.headerContainer} ${styles.header}`} id="busqueda">
         <div className={styles.logoBlock}>
           <h1 className={styles.logo}>{homeMock.brand.name}</h1>
           <span className={styles.tagline}>{homeMock.brand.tagline}</span>
         </div>
 
-        <div className={styles.searchWrap}>
-          <input
-            aria-label="Buscar repuestos"
-            className={styles.searchInput}
-            type="search"
-            placeholder={homeMock.header.searchPlaceholder}
-          />
+        <div className={styles.searchWrap} ref={searchWrapRef}>
+          <button
+            aria-controls="header-search"
+            aria-expanded={isSearchOpen}
+            aria-label="Abrir búsqueda"
+            className={`${styles.iconButton} ${styles.searchToggle}`}
+            onClick={() => setIsSearchOpen((current) => !current)}
+            type="button"
+          >
+            <SearchIcon />
+          </button>
+
+          <div
+            className={`${styles.searchDropdown} ${
+              isSearchOpen ? styles.searchDropdownOpen : ''
+            }`}
+          >
+            <input
+              id="header-search"
+              aria-label="Buscar repuestos"
+              className={styles.searchInput}
+              placeholder={homeMock.header.searchPlaceholder}
+              ref={searchInputRef}
+              type="search"
+            />
+          </div>
         </div>
 
         <div className={styles.actionIcons}>
-          <a href="#cuenta" className={styles.iconButton}>
+          <button
+            aria-controls="account-modal-title"
+            aria-expanded={isAccountModalOpen}
+            aria-haspopup="dialog"
+            aria-label="Abrir cuenta"
+            className={styles.iconButton}
+            onClick={openAccountModal}
+            type="button"
+          >
             <AccountIcon />
-            <span>Cuenta</span>
-          </a>
-          <a href="#carrito" className={styles.iconButton}>
+          </button>
+          <button
+            aria-label="Abrir carrito"
+            className={styles.iconButton}
+            type="button"
+            {...cartBtnProps}
+          >
             <CartIcon />
-            <span>Carrito</span>
-          </a>
+            {cartItems > 0 ? <span className={styles.iconBadge}>{cartItems}</span> : null}
+          </button>
         </div>
       </header>
 
-      <nav className={styles.navbar} aria-label="Categorías">
+      <nav
+        aria-label="Categorías"
+        className={styles.navbar}
+        onBlurCapture={handleNavbarBlur}
+        onMouseLeave={() => setActiveCategory(null)}
+      >
         <div className={styles.container}>
           <ul className={styles.navbarList}>
             {homeMock.navbar.categories.map((category) => (
-              <li key={category.name}>
+              <li
+                key={category.name}
+                onFocusCapture={() => setActiveCategory(category.href.replace('#', ''))}
+                onMouseEnter={() => setActiveCategory(category.href.replace('#', ''))}
+              >
                 <a className={styles.navLink} href={category.href}>
                   {category.name}
                 </a>
@@ -66,7 +234,26 @@ function HeaderSection() {
             ))}
           </ul>
         </div>
+
+        {activeCategory && activeParts.length > 0 ? (
+          <div className={styles.navDropdownWrap}>
+            <div className={`${styles.container} ${styles.navDropdown}`}>
+              {activeParts.map((part) => (
+                <a
+                  className={styles.navDropdownLink}
+                  href={`#${activeCategory}`}
+                  key={`${activeCategory}-${part}`}
+                >
+                  {part}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </nav>
+
+      <AccountModal isOpen={isAccountModalOpen} onClose={closeAccountModal} />
+      <MinicartSidebar />
     </div>
   )
 }

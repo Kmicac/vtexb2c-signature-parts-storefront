@@ -19,6 +19,7 @@ const COMPONENTS = {
   ProductTiles: NullSection,
   BannerText: NullSection,
   RegionBar: NullSection,
+  CartSidebar: NullSection,
 }
 
 export default COMPONENTS

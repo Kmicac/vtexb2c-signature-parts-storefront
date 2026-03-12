@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import type { StaticImageData } from 'next/image'
 
 import type { FooterSection } from '../../data/homeMock'
 
@@ -9,8 +10,8 @@ type FooterProps = {
   sections: FooterSection[]
   disclaimer: string
   logos: {
-    mercedes: string
-    bmw: string
+    mercedes: StaticImageData | string
+    bmw: StaticImageData | string
   }
 }
 
