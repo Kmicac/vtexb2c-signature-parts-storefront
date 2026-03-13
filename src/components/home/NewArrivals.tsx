@@ -1,13 +1,18 @@
 import Image from 'next/image'
+import type { StaticImageData } from 'next/image'
 
 import { formatArs, type ProductItem } from '../../data/homeMock'
 
 import styles from './home.module.scss'
 
+type ProductItemWithImage = ProductItem & {
+  image: StaticImageData
+}
+
 type NewArrivalsProps = {
   title: string
   subtitle: string
-  items: ProductItem[]
+  items: ProductItemWithImage[]
 }
 
 function NewArrivals({ title, subtitle, items }: NewArrivalsProps) {

@@ -3,21 +3,17 @@ export type HeroSlide = {
   title: string
   ctaLabel: string
   ctaHref: string
-  image: string
 }
 
 export type BrandItem = {
   id: string
   name: string
-  logo: string
-  cover: string
   href: string
 }
 
 export type CategoryItem = {
   id: string
   name: string
-  image: string
   href: string
 }
 
@@ -28,7 +24,6 @@ export type ProductItem = {
   badge: 'Nuevo' | 'Oferta'
   tag: 'OEM' | 'Equivalente'
   stock: number
-  image: string
   href: string
 }
 
@@ -62,10 +57,6 @@ export const homeMock = {
       { name: 'Partes de carro', href: '#partes-carro' },
     ],
   },
-  logos: {
-    mercedes: '/images/brands/mercedes-logo.svg',
-    bmw: '/images/brands/bmw-logo.svg',
-  },
   hero: {
     slides: [
       {
@@ -73,21 +64,18 @@ export const homeMock = {
         title: 'Repuestos premium para tu Mercedes o BMW',
         ctaLabel: 'Explorar catálogo',
         ctaHref: '#catalogo',
-        image: '/images/home/hero-premium.svg',
       },
       {
         id: 'hero-2',
         title: 'Calidad alemana para tu vehículo',
         ctaLabel: 'Ver categorías',
         ctaHref: '#categorias',
-        image: '/images/home/hero-quality.svg',
       },
       {
         id: 'hero-3',
         title: 'Encuentra el repuesto exacto',
         ctaLabel: 'Buscar repuestos',
         ctaHref: '#busqueda',
-        image: '/images/home/hero-find.svg',
       },
     ] as HeroSlide[],
   },
@@ -97,15 +85,11 @@ export const homeMock = {
       {
         id: 'mercedes',
         name: 'Mercedes-Benz',
-        logo: '/images/brands/mercedes-logo.svg',
-        cover: '/images/brands/mercedes-cover.svg',
         href: '#mercedes-benz',
       },
       {
         id: 'bmw',
         name: 'BMW',
-        logo: '/images/brands/bmw-logo.svg',
-        cover: '/images/brands/bmw-cover.svg',
         href: '#bmw',
       },
     ] as BrandItem[],
@@ -116,43 +100,36 @@ export const homeMock = {
       {
         id: 'frenos',
         name: 'Frenos',
-        image: '/images/categories/frenos.svg',
         href: '#frenos',
       },
       {
         id: 'suspension',
         name: 'Suspensión',
-        image: '/images/categories/suspension.svg',
         href: '#suspension',
       },
       {
         id: 'motor',
         name: 'Motor',
-        image: '/images/categories/motor.svg',
         href: '#motor',
       },
       {
         id: 'accesorios',
         name: 'Accesorios',
-        image: '/images/categories/accesorios.svg',
         href: '#accesorios',
       },
       {
         id: 'rines',
         name: 'Rines',
-        image: '/images/categories/rines.svg',
         href: '#rines',
       },
       {
         id: 'baterias',
         name: 'Baterías',
-        image: '/images/categories/baterias.svg',
         href: '#baterias',
       },
       {
         id: 'partes-carro',
         name: 'Partes de carro',
-        image: '/images/categories/partes-carro.svg',
         href: '#partes-carro',
       },
     ] as CategoryItem[],
@@ -167,7 +144,6 @@ export const homeMock = {
         badge: 'Oferta',
         tag: 'OEM',
         stock: 12,
-        image: '/images/products/brake-disc.svg',
         href: '#producto-disco-freno',
       },
       {
@@ -177,7 +153,6 @@ export const homeMock = {
         badge: 'Nuevo',
         tag: 'Equivalente',
         stock: 18,
-        image: '/images/products/brake-pads.svg',
         href: '#producto-pastillas-freno',
       },
       {
@@ -187,7 +162,6 @@ export const homeMock = {
         badge: 'Nuevo',
         tag: 'OEM',
         stock: 34,
-        image: '/images/products/oil-filter.svg',
         href: '#producto-filtro-aceite',
       },
       {
@@ -197,7 +171,6 @@ export const homeMock = {
         badge: 'Oferta',
         tag: 'OEM',
         stock: 9,
-        image: '/images/products/control-arm.svg',
         href: '#producto-brazo-control',
       },
       {
@@ -207,7 +180,6 @@ export const homeMock = {
         badge: 'Nuevo',
         tag: 'Equivalente',
         stock: 7,
-        image: '/images/products/shock-absorber.svg',
         href: '#producto-amortiguador',
       },
     ] as ProductItem[],
@@ -223,7 +195,6 @@ export const homeMock = {
         badge: 'Nuevo',
         tag: 'OEM',
         stock: 11,
-        image: '/images/products/battery-agm.svg',
         href: '#producto-bateria-agm',
       },
       {
@@ -233,7 +204,6 @@ export const homeMock = {
         badge: 'Nuevo',
         tag: 'Equivalente',
         stock: 6,
-        image: '/images/products/alloy-wheel.svg',
         href: '#producto-llanta-aleacion',
       },
       {
@@ -243,7 +213,6 @@ export const homeMock = {
         badge: 'Nuevo',
         tag: 'OEM',
         stock: 15,
-        image: '/images/products/ignition-coils.svg',
         href: '#producto-bobinas',
       },
       {
@@ -253,7 +222,6 @@ export const homeMock = {
         badge: 'Oferta',
         tag: 'Equivalente',
         stock: 20,
-        image: '/images/products/suspension-link.svg',
         href: '#producto-bieleta',
       },
     ] as ProductItem[],
@@ -262,7 +230,6 @@ export const homeMock = {
     title: 'Repuestos premium sin complicaciones',
     ctaLabel: 'Ver catálogo',
     ctaHref: '#catalogo',
-    image: '/images/home/promo-banner.svg',
   },
   newsletter: {
     title: 'Recibe ofertas exclusivas',
