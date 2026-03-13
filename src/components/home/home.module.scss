@@ -528,6 +528,15 @@
   font: 600 0.97rem/1.25 'Barlow', sans-serif;
 }
 
+.productName a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.productName a:hover {
+  color: #cfe0ff;
+}
+
 .productPrice {
   margin: 0.5rem 0 0.3rem;
   font: 700 1.15rem/1 'Rajdhani', sans-serif;

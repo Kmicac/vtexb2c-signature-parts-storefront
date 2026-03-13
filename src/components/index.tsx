@@ -6,6 +6,7 @@ import {
   NullSection,
   TopbarSection,
 } from './home'
+import SignatureCrossSellingShelf from './pdp/SignatureCrossSellingShelf'
 
 const COMPONENTS = {
   Alert: TopbarSection,
@@ -13,6 +14,8 @@ const COMPONENTS = {
   Hero: HomeMainSection,
   Newsletter: NewsletterSection,
   Footer: FooterSection,
+  BannerNewsletter: NullSection,
+  CrossSellingShelf: SignatureCrossSellingShelf,
 
   Incentives: NullSection,
   ProductShelf: NullSection,

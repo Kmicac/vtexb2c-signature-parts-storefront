@@ -3,6 +3,7 @@ import { FocusEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { AccountModal, MinicartSidebar } from '../common'
 import { homeMock } from '../../data/homeMock'
 import useUIState from '../../hooks/useUIState'
+import { useCart } from 'src/sdk/cart'
 import { useCartToggleButton } from 'src/sdk/cart/useCartToggleButton'
 
 import styles from './home.module.scss'
@@ -102,7 +103,11 @@ const categoryParts: Record<string, string[]> = {
 function HeaderSection() {
   const { isAccountModalOpen, openAccountModal, closeAccountModal } = useUIState()
   const cartBtnProps = useCartToggleButton()
-  const cartItems = Number(cartBtnProps['data-items'] ?? 0)
+  const { items } = useCart()
+  const cartItems = useMemo(
+    () => items.reduce((sum, item) => sum + item.quantity, 0),
+    [items]
+  )
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const searchWrapRef = useRef<HTMLDivElement>(null)

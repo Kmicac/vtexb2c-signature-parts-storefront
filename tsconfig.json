@@ -10,6 +10,18 @@
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*", ".faststore/src/*"],
+      "@generated": [".faststore/@generated/index.ts"],
+      "@generated/*": [".faststore/@generated/*"],
+      "@faststore/core": [".faststore/index.ts"],
+      "@faststore/core/api": [".faststore/api/index.ts"],
+      "@faststore/core/experimental": [".faststore/src/experimental/index.ts"],
+      "@faststore/core/experimental/server": [
+        ".faststore/src/experimental/server/index.ts"
+      ]
+    },
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
