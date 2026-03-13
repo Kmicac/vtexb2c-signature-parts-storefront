@@ -1,3 +1,5 @@
+import Head from 'next/head'
+
 import BrandTiles from './BrandTiles'
 import CategoryGrid from './CategoryGrid'
 import FeaturedProducts from './FeaturedProducts'
@@ -56,23 +58,36 @@ function HomeMainSection() {
     .filter(isDefined)
 
   return (
-    <main className={styles.surface}>
-      <HeroCarousel slides={heroSlides} logos={homeAssets.logos} />
-      <BrandTiles title={homeMock.brands.title} items={brandItems} />
-      <CategoryGrid title={homeMock.categories.title} items={categoryItems} />
-      <FeaturedProducts title={homeMock.featuredProducts.title} items={featuredItems} />
-      <NewArrivals
-        title={homeMock.newArrivals.title}
-        subtitle={homeMock.newArrivals.subtitle}
-        items={newArrivalItems}
-      />
-      <PromoBanner
-        title={homeMock.promoBanner.title}
-        ctaLabel={homeMock.promoBanner.ctaLabel}
-        ctaHref={homeMock.promoBanner.ctaHref}
-        image={homeAssets.promoBanner}
-      />
-    </main>
+    <>
+      <Head>
+        <title>Signature Parts</title>
+        <meta
+          name="description"
+          content="Repuestos premium para Mercedes-Benz y BMW"
+        />
+      </Head>
+
+      <main className={styles.surface}>
+        <HeroCarousel slides={heroSlides} logos={homeAssets.logos} />
+        <BrandTiles title={homeMock.brands.title} items={brandItems} />
+        <CategoryGrid title={homeMock.categories.title} items={categoryItems} />
+        <FeaturedProducts
+          title={homeMock.featuredProducts.title}
+          items={featuredItems}
+        />
+        <NewArrivals
+          title={homeMock.newArrivals.title}
+          subtitle={homeMock.newArrivals.subtitle}
+          items={newArrivalItems}
+        />
+        <PromoBanner
+          title={homeMock.promoBanner.title}
+          ctaLabel={homeMock.promoBanner.ctaLabel}
+          ctaHref={homeMock.promoBanner.ctaHref}
+          image={homeAssets.promoBanner}
+        />
+      </main>
+    </>
   )
 }
 
