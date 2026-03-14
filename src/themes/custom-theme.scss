@@ -222,11 +222,21 @@
     [data-fs-product-title] {
       --fs-product-title-text-size                      : var(--fs-text-size-6);
       --fs-product-title-text-weight                    : var(--fs-text-weight-semibold);
+
+      h1 {
+        max-width: 12ch;
+        color: #101520;
+        font-family: "Rajdhani", "Barlow", sans-serif;
+        font-size: clamp(2.1rem, 3.2vw, 3.5rem);
+        line-height: 1.02;
+        letter-spacing: -0.05em;
+      }
     }
 
     [data-fs-product-details-title] {
       padding-top: 0;
       border-top: none;
+      margin-bottom: var(--fs-spacing-2);
     }
 
     [data-fs-product-details] {
@@ -241,6 +251,67 @@
       }
     }
 
+    [data-fs-breadcrumb] {
+      margin-top: var(--fs-spacing-4);
+      margin-bottom: var(--fs-spacing-3);
+      color: #8c98a8;
+
+      [data-fs-breadcrumb-link] {
+        color: inherit;
+      }
+    }
+
+    [data-fs-product-details-body] {
+      align-items: start;
+      gap: var(--fs-spacing-5);
+
+      @include media(">=notebook") {
+        grid-template-columns: minmax(0, 1.45fr) minmax(320px, 400px);
+      }
+    }
+
+    [data-fs-product-details-gallery] {
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    [data-fs-product-details-info] {
+      position: relative;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    [data-fs-product-details-values] {
+      row-gap: var(--fs-spacing-4);
+    }
+
+    [data-fs-product-details-prices] {
+      [data-fs-price] {
+        color: #121821;
+      }
+    }
+
+    [data-fs-product-details-settings] {
+      row-gap: var(--fs-spacing-4);
+      border: 0;
+    }
+
+    [data-fs-buy-button] {
+      min-height: 52px;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    [data-fs-product-description] {
+      grid-column: 1 / -1;
+      margin-top: 0;
+    }
+
     [data-fs-sku-selector] {
       --fs-sku-selector-image-border-radius                : var(--fs-border-radius-circle);
       --fs-sku-selector-option-border-radius               : var(--fs-border-radius-circle);
@@ -248,7 +319,7 @@
     }
 
     [data-fs-image-gallery] > [data-fs-image] {
-      object-fit: cover;
+      object-fit: contain;
 
       @include media("<notebook") {
         height: 280px;
@@ -266,6 +337,10 @@
       &:hover [data-fs-button-wrapper] {
         background-color: var(--fs-image-gallery-selector-control-bkg-color);
       }
+    }
+
+    .section-banner-newsletter {
+      display: none;
     }
 
     ////////////////////
@@ -306,6 +381,60 @@
       column-gap: var(--fs-spacing-6);
 
       @include media(">=notebook") { row-gap: var(--fs-spacing-3); }
+    }
+
+    .section-product-shelf {
+      padding-top: var(--fs-spacing-8);
+    }
+
+    .section-product-shelf [data-fs-product-shelf] {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section-product-shelf .text__title-section {
+      margin-bottom: var(--fs-spacing-5);
+      color: #11151b;
+      font-family: "Rajdhani", "Barlow", sans-serif;
+      font-size: clamp(1.65rem, 2.4vw, 2.25rem);
+      font-weight: var(--fs-text-weight-bold);
+      letter-spacing: -0.04em;
+      text-align: center;
+    }
+
+    .section-product-shelf [data-fs-product-card] {
+      --fs-product-card-padding                         : 0;
+      --fs-product-card-border-width                    : 0;
+      background: transparent;
+    }
+
+    .section-product-shelf [data-fs-product-card-image] {
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .section-product-shelf [data-fs-product-card-content] {
+      padding-top: var(--fs-spacing-3);
+      text-align: center;
+    }
+
+    .section-product-shelf [data-fs-product-card-title] {
+      color: #1d2530;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .section-product-shelf [data-fs-price] {
+      color: #1c2430;
+    }
+
+    .section-product-shelf [data-fs-carousel-track] {
+      justify-content: center;
+    }
+
+    .section-product-shelf [data-fs-carousel-item] {
+      width: min(320px, 72vw);
     }
 
     [data-fs-filter] {
