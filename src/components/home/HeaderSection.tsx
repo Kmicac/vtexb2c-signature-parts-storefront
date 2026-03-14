@@ -103,11 +103,7 @@ const categoryParts: Record<string, string[]> = {
 function HeaderSection() {
   const { isAccountModalOpen, openAccountModal, closeAccountModal } = useUIState()
   const cartBtnProps = useCartToggleButton()
-  const { items } = useCart()
-  const cartItems = useMemo(
-    () => items.reduce((sum, item) => sum + item.quantity, 0),
-    [items]
-  )
+  const { totalItems } = useCart()
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const searchWrapRef = useRef<HTMLDivElement>(null)
@@ -213,7 +209,7 @@ function HeaderSection() {
             {...cartBtnProps}
           >
             <CartIcon />
-            {cartItems > 0 ? <span className={styles.iconBadge}>{cartItems}</span> : null}
+            {totalItems > 0 ? <span className={styles.iconBadge}>{totalItems}</span> : null}
           </button>
         </div>
       </header>

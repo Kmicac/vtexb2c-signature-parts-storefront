@@ -13,39 +13,11 @@ import styles from './common.module.scss'
 function MinicartSidebar() {
   const { cart: displayCart, closeCart } = useUI()
   const checkoutBtnProps = useCheckoutButton()
-  const { items, gifts, isValidating } = useCart()
+  const { items, gifts, isValidating, subTotal, total, totalItems } = useCart()
   const formatPrice = usePriceFormatter({ decimals: true })
   const panelRef = useRef<HTMLDivElement>(null)
 
   const isEmpty = useMemo(() => items.length === 0, [items.length])
-  const normalizePrice = (value: number, unitMultiplier?: number | null) =>
-    value / (unitMultiplier && unitMultiplier > 0 ? unitMultiplier : 1)
-  const visibleSubTotal = useMemo(
-    () =>
-      items.reduce(
-        (sum, item) =>
-          sum +
-          normalizePrice(item.listPrice, item.itemOffered.unitMultiplier) *
-            item.quantity,
-        0
-      ),
-    [items]
-  )
-  const visibleTotal = useMemo(
-    () =>
-      items.reduce(
-        (sum, item) =>
-          sum +
-          normalizePrice(item.price, item.itemOffered.unitMultiplier) *
-            item.quantity,
-        0
-      ),
-    [items]
-  )
-  const visibleItemsCount = useMemo(
-    () => items.reduce((sum, item) => sum + item.quantity, 0),
-    [items]
-  )
 
   useEffect(() => {
     if (!displayCart) {
@@ -108,7 +80,9 @@ function MinicartSidebar() {
       <aside
         aria-label="Carrito de compra"
         aria-modal="true"
+        aria-busy={isValidating}
         className={styles.minicartPanel}
+        onClick={(event) => event.stopPropagation()}
         ref={panelRef}
         role="dialog"
       >
@@ -158,6 +132,7 @@ function MinicartSidebar() {
                         <p className={styles.minicartItemName}>{productName}</p>
                         <button
                           className={styles.minicartRemove}
+                          disabled={isValidating}
                           onClick={() => cartStore.removeItem(item.id)}
                           type="button"
                         >
@@ -165,14 +140,13 @@ function MinicartSidebar() {
                         </button>
                       </div>
                       <p className={styles.minicartItemPrice}>
-                        {formatPrice(
-                          normalizePrice(item.price, item.itemOffered.unitMultiplier)
-                        )}
+                        {formatPrice(item.price)}
                       </p>
                       <div className={styles.minicartQty}>
                         <button
                           aria-label="Disminuir cantidad"
                           className={styles.minicartQtyBtn}
+                          disabled={isValidating || item.quantity <= 1}
                           onClick={() =>
                             cartStore.updateItemQuantity(item.id, Math.max(1, item.quantity - 1))
                           }
@@ -184,6 +158,7 @@ function MinicartSidebar() {
                         <button
                           aria-label="Aumentar cantidad"
                           className={styles.minicartQtyBtn}
+                          disabled={isValidating}
                           onClick={() => cartStore.updateItemQuantity(item.id, item.quantity + 1)}
                           type="button"
                         >
@@ -204,7 +179,7 @@ function MinicartSidebar() {
             <div className={styles.minicartSummary}>
               <div className={styles.minicartRow}>
                 <span>Subtotal (sin envío)</span>
-                <strong>{formatPrice(visibleSubTotal)}</strong>
+                <strong>{formatPrice(subTotal)}</strong>
               </div>
 
               <div className={styles.minicartShipping}>
@@ -220,7 +195,7 @@ function MinicartSidebar() {
 
               <div className={styles.minicartTotal}>
                 <span>Total</span>
-                <strong>{formatPrice(visibleTotal)}</strong>
+                <strong>{formatPrice(total)}</strong>
               </div>
 
               <button className={styles.minicartPrimaryCta} type="button" {...checkoutBtnProps}>
@@ -232,7 +207,7 @@ function MinicartSidebar() {
               </a>
 
               <p className={styles.minicartMeta}>
-                {visibleItemsCount} artículos en tu carrito
+                {totalItems} artículos en tu carrito
               </p>
             </div>
           </>
